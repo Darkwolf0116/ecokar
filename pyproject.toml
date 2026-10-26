@@ -1,0 +1,47 @@
+[project]
+name = "ecokar-sim"
+version = "0.1.0"
+description = "EcoKar digital twin: web 3D simulator of a Bluetooth trash-collecting robot car with a robotic arm."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+]
+
+[project.scripts]
+ecokar-sim = "ecokar_sim.__main__:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "httpx>=0.27",
+    "ruff>=0.6",
+]
+
+[build-system]
+requires = ["uv_build>=0.10.2,<0.11.0"]
+build-backend = "uv_build"
+
+# src layout: the package lives in src/ecokar_sim and every file below it
+# (including src/ecokar_sim/static) is shipped as package data.
+[tool.uv.build-backend]
+module-name = "ecokar_sim"
+module-root = "src"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+filterwarnings = [
+    # Starlette 1.x prefers httpx2 for its TestClient but still works with httpx.
+    "ignore:Using `httpx` with `starlette.testclient`:UserWarning",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+extend-exclude = [".agents", ".claude", ".atl", "info", "arduino"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
