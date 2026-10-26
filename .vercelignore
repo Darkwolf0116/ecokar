@@ -1,0 +1,12 @@
+# Files that the static build (scripts/build_web.py) does not need: keep the upload small.
+.venv
+.git
+dist
+tests
+info/*.jpeg
+__pycache__
+.pytest_cache
+.ruff_cache
+.claude
+.agents
+.atl
