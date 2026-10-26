@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>EcoKar, gemelo digital</title>
+  <meta name="description" content="Gemelo digital en 3D del carro robot recolector EcoKar: calle a escala real, brazo robótico y la app de control.">
+  <meta name="theme-color" content="#1A1A5A">
+  <link rel="icon" type="image/png" href="/static/assets/ecokar-logo.png">
+  <link rel="preload" href="/static/vendor/fonts/lexend-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/static/assets/app-background.avif" as="image" type="image/avif">
+  <link rel="stylesheet" href="/static/css/app.css">
+  <script type="importmap">
+    {"imports":{"three":"/static/vendor/three/three.module.min.js","three/addons/":"/static/vendor/three/addons/"}}
+  </script>
+</head>
+<body class="is-splash">
+  <a class="skip-link" href="#app-panel">Ir a los controles de la app</a>
+
+  <div class="shell" id="shell" data-hud="open" inert>
+    <main class="stage-col">
+      <div class="viewport" id="viewport">
+        <header class="topbar hud-panel">
+          <div class="brand">
+            <img class="brand-logo" src="/static/assets/ecokar-logo.png" alt="" width="36" height="36">
+            <h1 class="brand-title">Gemelo digital EcoKar</h1>
+          </div>
+          <div class="camera-switch" role="group" aria-label="Cámara">
+            <button type="button" data-camera="orbital" aria-pressed="false">Orbital</button>
+            <button type="button" data-camera="chase" aria-pressed="true">Seguimiento</button>
+            <button type="button" data-camera="gripper" aria-pressed="false">Pinza</button>
+          </div>
+          <div class="topbar-actions">
+            <button type="button" id="hud-toggle" class="btn btn-ghost" aria-pressed="true" aria-controls="hud-bottom">Telemetría</button>
+            <button type="button" id="reset" class="btn btn-ghost">Reiniciar misión</button>
+          </div>
+        </header>
+
+        <aside class="hud-panel mission-card" id="mission-card"></aside>
+        <div class="toasts" id="toasts"></div>
+
+        <section class="hud-bottom" id="hud-bottom" aria-label="Telemetría y monitor serie">
+          <div class="drawer-bar">
+            <span class="drawer-title">Telemetría y monitor serie</span>
+            <button type="button" id="hud-close" class="btn btn-quiet">Cerrar</button>
+          </div>
+          <div class="hud-panel telemetry" id="telemetry"></div>
+          <div class="hud-panel serial" id="serial"></div>
+          <div class="hud-panel minimap" id="minimap"></div>
+        </section>
+
+        <p class="webgl-error" id="webgl-error" role="alert" hidden>
+          Tu navegador no pudo iniciar los gráficos 3D (WebGL). Activa la aceleración por hardware o prueba con otro navegador.
+        </p>
+      </div>
+    </main>
+
+    <aside class="panel-col" aria-label="Controles de la app">
+      <div id="app-panel"></div>
+      <div id="key-legend" class="key-legend"></div>
+    </aside>
+  </div>
+
+  <div class="splash" id="splash" role="dialog" aria-modal="true" aria-labelledby="splash-title">
+    <div class="splash-inner">
+      <img class="splash-logo" src="/static/assets/ecokar-logo.png" alt="EcoKar, desechando de manera inteligente" width="500" height="500">
+      <h1 class="visually-hidden" id="splash-title">EcoKar, gemelo digital</h1>
+      <div class="splash-spacer" aria-hidden="true"></div>
+      <button type="button" class="start-button" id="start">Comenzar</button>
+      <p class="splash-status visually-hidden" id="splash-status" role="status" aria-live="polite"></p>
+      <div class="splash-school">
+        <img class="splash-crest" src="/static/assets/ined-crest.png" alt="Escudo del INED" width="120" height="120">
+        <p class="splash-caption">Instituto Nacional de Educación Diversificada, Aldea Chiquixjí, Carchá A.V.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="lost" id="lost" role="status" aria-live="polite" hidden>
+    <div class="lost-card">
+      <span class="spinner" aria-hidden="true"></span>
+      <p class="lost-title">Sin conexión con el simulador. Reintentando…</p>
+      <p class="lost-detail" id="lost-detail"></p>
+    </div>
+  </div>
+
+  <script type="module" src="/static/js/main.js"></script>
+</body>
+</html>
